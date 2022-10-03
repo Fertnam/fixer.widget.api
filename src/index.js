@@ -1,24 +1,30 @@
 const express = require('express')
-const { getDatabase } = require('./database')
+const { getConnection } = require('./db/connection')
 
 const app = express()
-const port = 3000
 
-app.get('/', async (req, res) => {
-    res.send('Hello world')
-})
-
-app.get('/users', async (req, res) => {
+app.get('/symbols', async (_, res) => {
     try {
-        const db = await getDatabase()
+        const db = await getConnection()
+        const symbols = db.collection('symbols')
 
-        const users = db.collection('users')
-        const result = await users.find().toArray()
+        const { symbols: data } = await symbols.findOne()
 
-        res.send(result)
+        res.json(data)
     } catch {
-        res.send('error')
+        res.statusCode(500).send('Internal error')
     }
 })
 
-app.listen(port)
+app.get('/latest', async (_, res) => {
+    try {
+        const db = await getConnection()
+        const latest = db.collection('latest')
+
+        res.json(await latest.findOne())
+    } catch {
+        res.statusCode(500).send('Internal error')
+    }
+})
+
+app.listen(3000)
