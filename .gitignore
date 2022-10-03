@@ -1,6 +1,7 @@
 .env
 
 node_modules
-storage
+database
 
 .DS_Store
+.vscode

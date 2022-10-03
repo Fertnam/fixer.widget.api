@@ -1,35 +1,24 @@
 const express = require('express')
-const { MongoClient } = require('mongodb')
+const { getDatabase } = require('./database')
 
 const app = express()
 const port = 3000
 
 app.get('/', async (req, res) => {
-  res.send('Hello world')
+    res.send('Hello world')
 })
 
 app.get('/users', async (req, res) => {
-  const getUsers = async () => {
-      try {
-          const client = new MongoClient(`mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@mongo:27017`)
+    try {
+        const db = await getDatabase()
 
-          await client.connect()
-          console.log('MongoDB is connected');
+        const users = db.collection('users')
+        const result = await users.find().toArray()
 
-          const fixer = client.db('fixer')
-          const users = fixer.collection('users');
-
-          const result = await users.find().toArray()
-
-          res.json(result)
-      } catch(e) {
-          console.error(e)
-
-          res.send('error')
-      }
-  }
-
-  getUsers()
+        res.send(result)
+    } catch {
+        res.send('error')
+    }
 })
 
 app.listen(port)

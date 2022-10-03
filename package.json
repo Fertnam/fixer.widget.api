@@ -1,21 +1,22 @@
 {
-  "name": "fixer.widget.api",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "axios": "^0.27.2",
-    "express": "^4.18.1",
-    "mongodb": "^4.10.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.20"
-  }
+    "name": "fixer.widget.api",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "node src/index.js",
+        "dev": "nodemon src/index.js",
+        "lint": "eslint --fix --ext .js ."
+    },
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.27.2",
+        "express": "^4.18.1",
+        "mongodb": "^4.10.0"
+    },
+    "devDependencies": {
+        "eslint": "^8.24.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "nodemon": "^2.0.20",
+        "prettier": "2.7.1"
+    }
 }
